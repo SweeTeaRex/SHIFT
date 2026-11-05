@@ -25,13 +25,17 @@ int main(void)
     player.setSpeed(0);
 
     //set boundaries
+    //base
     Platform platformBase;
-    platformBase.setBottomWall({0,screenHeight-20,screenWidth, 20});
+    platformBase.setWall({0,screenHeight-20,screenWidth, 20});
+    //left wall
     Platform leftWall;
-    leftWall.setLeftWall({0,0,20, screenHeight});
+    leftWall.setWall({0,0,20, screenHeight});
+    // right wall
     Platform rightWall;
-    rightWall.setRightWall({screenWidth-20, 0, 20, screenHeight});
-    
+    rightWall.setWall({screenWidth-20, 0, 20, screenHeight});
+    // platform 1
+    Platform platform1;
 
 
     
@@ -42,28 +46,23 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose())
     {
-        // UPDATE
+        // UPDATE Frame
         float deltaTime = GetFrameTime();
-
+        // collision detection and correction for platforms
         player.updatePlayer(deltaTime);
-        Vector2 newPositionBase = platformBase.checkWallColl(player.getOutBox(), player.getPosition());
-        player.setPosition(newPositionBase);        
-        Vector2 newPositionLeftWall = leftWall.checkWallColl(player.getOutBox(), player.getPosition());
-        player.setPosition(newPositionLeftWall);
-        Vector2 newPositionRightWall = rightWall.checkWallColl(player.getOutBox(), player.getPosition());
-        player.setPosition(newPositionRightWall);
+        
         
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
             ClearBackground(LIGHTGRAY);
             
-
+            // draw platforms and player
             DrawRectangleRec(player.getOutBox(), RED);
             DrawRectangleRec(player.getInBox(), BLACK);
-            DrawRectangleRec(platformBase.getBottomWall(), GRAY);
-            DrawRectangleRec(leftWall.getLeftWall(), GRAY);
-            DrawRectangleRec(rightWall.getRightWall(), GRAY);
+            DrawRectangleRec(platformBase.getWall(), GRAY);
+            DrawRectangleRec(leftWall.getWall(), GRAY);
+            DrawRectangleRec(rightWall.getWall(), GRAY);
 
 
 

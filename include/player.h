@@ -7,6 +7,9 @@ class Player {
     Rectangle inBox;
     Vector2 position;
     float speed;
+    bool isGrounded;
+    float GRAVITY;
+    float velocityY=0;
     public:
     // get
     Rectangle getOutBox() const;

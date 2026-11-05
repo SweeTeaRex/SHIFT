@@ -35,7 +35,11 @@ void Player::setSpeed(float inputSpeed){
 // UPDATE FUNCTIONS
 void Player::updatePlayer(float deltaTime){
     //left
+    GRAVITY = 100.0f;
     
+    velocityY += GRAVITY * deltaTime;
+    position.y += velocityY * deltaTime;
+
     if(IsKeyDown(KEY_LEFT_SHIFT)&&IsKeyDown(KEY_A)){
         position.x -= PLAYER_SPEED2*deltaTime;
     }
@@ -55,6 +59,7 @@ void Player::updatePlayer(float deltaTime){
     if(IsKeyDown(KEY_S) && IsKeyDown(KEY_LEFT_SHIFT)){
         position.y += PLAYER_SPEED2*deltaTime;
     }
+    /*
     else if(IsKeyDown(KEY_S)){
         position.y += PLAYER_SPEED1*deltaTime;
     }
@@ -66,6 +71,7 @@ void Player::updatePlayer(float deltaTime){
     else if(IsKeyDown(KEY_W)){
         position.y -= PLAYER_SPEED1*deltaTime;
     }
+    */
     outBox.x = position.x;
     inBox.x= position.x;
     outBox.y = position.y;

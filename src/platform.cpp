@@ -2,11 +2,11 @@
 
 
 // get
-Rectangle Platform::getBottomWall(){
+Rectangle Platform::getWall(){
     
-    return bottomWall;
+    return wall;
 }
-
+/*
 Rectangle Platform::getLeftWall(){
     return leftWall;
 }
@@ -14,7 +14,7 @@ Rectangle Platform::getLeftWall(){
 Rectangle Platform::getRightWall(){
     return rightWall;
 }
-
+*/
 Vector2 Platform::getPosition(){
     return position;
 
@@ -22,10 +22,11 @@ Vector2 Platform::getPosition(){
 
 
 // set
-void Platform::setBottomWall(Rectangle inputWall){
-    bottomWall = inputWall;
-}
 
+void Platform::setWall(Rectangle inputWall){
+    wall = inputWall;
+}
+/*
 void Platform::setLeftWall(Rectangle inputWall){
     leftWall = inputWall;
 }
@@ -33,10 +34,10 @@ void Platform::setLeftWall(Rectangle inputWall){
 void Platform::setRightWall(Rectangle inputWall){
     rightWall = inputWall;
 }
+*/
 
 
 
-/*
 void Platform::setPosition(Vector2 inputPos){
     position = inputPos;
     wall.x = position.x;
@@ -44,17 +45,8 @@ void Platform::setPosition(Vector2 inputPos){
 
 
 }
-*/
+
 
 Vector2 Platform::checkWallColl(Rectangle playerRec, Vector2 playerPosition){
-    if(CheckCollisionRecs(bottomWall, playerRec)){
-        playerPosition.y = bottomWall.y - playerRec.height;
-    }
-    if(CheckCollisionRecs(leftWall, playerRec)){
-        playerPosition.x = leftWall.x + leftWall.width;
-    }
-    if(CheckCollisionRecs(rightWall, playerRec)){
-        playerPosition.x = rightWall.x-playerRec.width;
-    }
-    return playerPosition;
+    
 }
