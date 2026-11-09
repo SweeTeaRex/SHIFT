@@ -62,10 +62,7 @@ int main(void)
         Rectangle floor = platformBase.getWall();
 
         Vector2 newPosition =
-            platformBase.checkWallCollBottom(
-                playerBox,
-                floor
-            );
+            platformBase.checkWallCollBottom(playerBox, floor);
 
 
         // Check if bottom of player reached the floor
@@ -89,6 +86,9 @@ int main(void)
         newPosition = rightWall.checkWallCollRight(player.getOutBox(), rightWall.getWall());
         player.setPosition(newPosition);
         //----------------------------------------------------------------------------------
+
+
+        
         BeginDrawing();
 
             ClearBackground(LIGHTGRAY);

@@ -10,3 +10,9 @@ const float PLAYER_SPEED2 = 500;
 
 // gravity
 const float JUMP_SPEED = 100.0f;
+
+enum GameState{
+    INTRO,
+    MENU,
+    OUTSIDE
+};
