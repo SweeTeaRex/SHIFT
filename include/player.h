@@ -21,7 +21,8 @@ class Player {
     void setOutBox(Rectangle inputBox);
     void setInBox(Rectangle inputBox);
     void setPosition(Vector2 inputPos);
-    void setSpeed(float inputSpeed);
+    void setVelocityY(float inputVelocity);
+    void setGrounded(bool inputGrounded);
     // update
     void updatePlayer(float deltaTime);
 };

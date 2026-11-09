@@ -29,9 +29,15 @@ void Player::setPosition(Vector2 inputPos){
     inBox.x = position.x;
     inBox.y = position.y;
 }
-void Player::setSpeed(float inputSpeed){
-    speed = inputSpeed;
+void Player::setVelocityY(float inputVelocity){
+    speed = inputVelocity;
 }
+
+void Player::setGrounded(bool inputGrounded){
+    isGrounded = inputGrounded;
+}
+
+
 // UPDATE FUNCTIONS
 void Player::updatePlayer(float deltaTime){
     
@@ -39,6 +45,12 @@ void Player::updatePlayer(float deltaTime){
     
     velocityY += GRAVITY * deltaTime;
     position.y += velocityY * deltaTime;
+
+    //jump
+    if(IsKeyPressed(KEY_LEFT_SHIFT)&& isGrounded){
+        velocityY = -JUMP_SPEED;
+        isGrounded=false;
+    }
     //left
     if(IsKeyDown(KEY_LEFT_SHIFT)&&IsKeyDown(KEY_A)){
         position.x -= PLAYER_SPEED2*deltaTime;

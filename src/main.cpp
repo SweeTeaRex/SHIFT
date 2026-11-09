@@ -22,7 +22,6 @@ int main(void)
     player.setOutBox({0,0,20,20});
     player.setInBox({0,0,10,10});
     player.setPosition({screenWidth/2, screenHeight/2});
-    player.setSpeed(0);
 
     //set boundaries
     //base
@@ -52,10 +51,32 @@ int main(void)
         
         //update player
         player.updatePlayer(deltaTime);
+        player.setGrounded(false);
+        Vector2 oldPosition = player.getPosition();
 
         // bottom wall collision
-        Vector2 newPosition = platformBase.checkWallCollBottom(player.getOutBox(), platformBase.getWall());
-        player.setPosition(newPosition);
+        // bottom wall collision
+    Vector2 newPosition = platformBase.checkWallCollBottom(
+        player.getOutBox(),
+        platformBase.getWall()
+    );
+
+
+    if (newPosition.y != oldPosition.y){
+        player.setVelocityY(0.0f);
+        player.setGrounded(true);
+    }
+
+player.setPosition(newPosition);
+
+// Did the bottom collision move the player?
+if (newPosition.y != oldPosition.y)
+{
+    player.setVelocityY(0.0f);
+    player.setGrounded(true);
+}
+
+player.setPosition(newPosition);
 
         // left wall collision
         newPosition = leftWall.checkWallCollLeft(player.getOutBox(), leftWall.getWall());

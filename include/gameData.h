@@ -9,3 +9,4 @@ const float PLAYER_SPEED1 = 300;
 const float PLAYER_SPEED2 = 500;
 
 // gravity
+const float JUMP_SPEED = 300.0f;
