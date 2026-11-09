@@ -46,7 +46,29 @@ void Platform::setPosition(Vector2 inputPos){
 
 }
 
+// Collision Funcs
+Vector2 Platform::checkWallCollBottom(Rectangle playerRec, Rectangle bottomWall){
+    Vector2 playerPosition = {playerRec.x, playerRec.y};
+    if(CheckCollisionRecs(playerRec, bottomWall)){
+            playerPosition.y = bottomWall.y - playerRec.height;
+    }
+    return playerPosition;
 
-Vector2 Platform::checkWallColl(Rectangle playerRec, Vector2 playerPosition){
     
+}
+
+Vector2 Platform::checkWallCollLeft(Rectangle playerRec, Rectangle leftWall){
+    Vector2 playerPosition = {playerRec.x, playerRec.y};
+    if(CheckCollisionRecs(playerRec, leftWall)){
+        playerPosition.x = leftWall.x + leftWall.width;
+    }
+    return playerPosition;
+}
+
+Vector2 Platform::checkWallCollRight(Rectangle playerRec, Rectangle rightWall){
+    Vector2 playerPosition = {playerRec.x, playerRec.y};
+    if(CheckCollisionRecs(playerRec, rightWall)){
+        playerPosition.x = rightWall.x - playerRec.width;
+    }
+    return playerPosition;
 }

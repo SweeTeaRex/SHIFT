@@ -49,9 +49,21 @@ int main(void)
         // UPDATE Frame
         float deltaTime = GetFrameTime();
         // collision detection and correction for platforms
+        
+        //update player
         player.updatePlayer(deltaTime);
-        
-        
+
+        // bottom wall collision
+        Vector2 newPosition = platformBase.checkWallCollBottom(player.getOutBox(), platformBase.getWall());
+        player.setPosition(newPosition);
+
+        // left wall collision
+        newPosition = leftWall.checkWallCollLeft(player.getOutBox(), leftWall.getWall());
+        player.setPosition(newPosition);
+
+        // right wall collision
+        newPosition = rightWall.checkWallCollRight(player.getOutBox(), rightWall.getWall());
+        player.setPosition(newPosition);
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
