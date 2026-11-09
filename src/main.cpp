@@ -51,32 +51,35 @@ int main(void)
         
         //update player
         player.updatePlayer(deltaTime);
-        player.setGrounded(false);
-        Vector2 oldPosition = player.getPosition();
+        
 
-        // bottom wall collision
-        // bottom wall collision
-    Vector2 newPosition = platformBase.checkWallCollBottom(
-        player.getOutBox(),
-        platformBase.getWall()
-    );
+        
+        // ========================================
+        // BOTTOM WALL COLLISION
+        // ========================================
+
+        Rectangle playerBox = player.getOutBox();
+        Rectangle floor = platformBase.getWall();
+
+        Vector2 newPosition =
+            platformBase.checkWallCollBottom(
+                playerBox,
+                floor
+            );
 
 
-    if (newPosition.y != oldPosition.y){
-        player.setVelocityY(0.0f);
-        player.setGrounded(true);
-    }
+        // Check if bottom of player reached the floor
+        if (playerBox.y + playerBox.height >= floor.y)
+        {
+            player.setVelocityY(0.0f);
+            player.setGrounded(true);
+        }
+        else
+        {
+            player.setGrounded(false);
+        }
 
-player.setPosition(newPosition);
-
-// Did the bottom collision move the player?
-if (newPosition.y != oldPosition.y)
-{
-    player.setVelocityY(0.0f);
-    player.setGrounded(true);
-}
-
-player.setPosition(newPosition);
+        player.setPosition(newPosition);
 
         // left wall collision
         newPosition = leftWall.checkWallCollLeft(player.getOutBox(), leftWall.getWall());
