@@ -7,7 +7,7 @@ class Player {
     Rectangle outBox;
     Rectangle inBox;
     Vector2 position;
-    float speed;
+    float velocity;
     bool isGrounded;
     float GRAVITY;
     float velocityY=0;
@@ -16,7 +16,8 @@ class Player {
     Rectangle getOutBox() const;
     Rectangle getInBox() const;
     Vector2 getPosition()const;
-    float getSpeed() const;
+    float getVelocity() const;
+    float getVelocityY();
     //set
     void setOutBox(Rectangle inputBox);
     void setInBox(Rectangle inputBox);

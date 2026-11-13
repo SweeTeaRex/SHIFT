@@ -72,3 +72,15 @@ Vector2 Platform::checkWallCollRight(Rectangle playerRec, Rectangle rightWall){
     }
     return playerPosition;
 }
+
+Vector2 Platform::checkWallCollPlatform(Rectangle playerRec, Rectangle platform, float velocityY){
+    Vector2 playerPosition = {playerRec.x, playerRec.y};
+    if(velocityY >= 0){
+        if(CheckCollisionRecs(playerRec, platform)){
+            playerPosition.y = platform.y - playerRec.height;
+        }
+    }
+
+    return playerPosition;
+
+}

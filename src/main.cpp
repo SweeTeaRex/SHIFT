@@ -35,6 +35,7 @@ int main(void)
     rightWall.setWall({screenWidth-20, 0, 20, screenHeight});
     // platform 1
     Platform platform1;
+    platform1.setWall({200, screenHeight-150, 100, 20});
 
 
     
@@ -86,7 +87,8 @@ int main(void)
         newPosition = rightWall.checkWallCollRight(player.getOutBox(), rightWall.getWall());
         player.setPosition(newPosition);
         //----------------------------------------------------------------------------------
-
+        newPosition = platform1.checkWallCollPlatform(player.getOutBox(), platform1.getWall(), player.getVelocityY());
+        player.setPosition(newPosition);
 
         
         BeginDrawing();
@@ -99,6 +101,7 @@ int main(void)
             DrawRectangleRec(platformBase.getWall(), GRAY);
             DrawRectangleRec(leftWall.getWall(), GRAY);
             DrawRectangleRec(rightWall.getWall(), GRAY);
+            DrawRectangleRec(platform1.getWall(), GRAY);
 
 
 

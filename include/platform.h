@@ -34,4 +34,8 @@ class Platform {
 
     Vector2 checkWallCollPlatformA(Rectangle playerRec, Rectangle platA);
     
+    Vector2 checkWallCollPlatform(Rectangle playerRec, Rectangle platform, float velocityY);
+
+
+
 };

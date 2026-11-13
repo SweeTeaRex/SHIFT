@@ -12,8 +12,11 @@ Rectangle Player::getInBox() const{
 Vector2 Player::getPosition()const{
     return position;
 }
-float Player::getSpeed() const{
-    return speed;
+float Player::getVelocity() const{
+    return velocity;
+}
+float Player::getVelocityY() {
+    return velocityY;
 }
 // SET FUNCTIONS
 void Player::setOutBox(Rectangle inputBox){
@@ -30,7 +33,7 @@ void Player::setPosition(Vector2 inputPos){
     inBox.y = position.y;
 }
 void Player::setVelocityY(float inputVelocity){
-    speed = inputVelocity;
+    velocity = inputVelocity;
 }
 
 void Player::setGrounded(bool inputGrounded){
