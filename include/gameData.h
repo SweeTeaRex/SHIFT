@@ -14,5 +14,5 @@ const float JUMP_SPEED = 100.0f;
 enum GameState{
     INTRO,
     MENU,
-    OUTSIDE
+    LVL1
 };
