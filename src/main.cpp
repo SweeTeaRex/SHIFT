@@ -31,7 +31,7 @@ int main(void)
     InitAudioDevice();
     Music songs[9];
     songs[0] = LoadMusicStream("sound/dragon.mp3");
-    songs[1] = LoadMusicStream("sound/chew.mp3");
+    songs[1] = LoadMusicStream("sound/wordChew.mp3");
     songs[3] = LoadMusicStream("sound/soul.mp3");
     songs[4] = LoadMusicStream("sound/dance.mp3");
     songs[5] = LoadMusicStream("sound/NASA.mp3");
@@ -53,7 +53,7 @@ int main(void)
     };
 
     int currentSong = 0;
-    PlayMusicStream(songs[currentSong]);
+    //PlayMusicStream(songs[currentSong]);
 
     
 
@@ -138,7 +138,7 @@ int main(void)
         float deltaTime = GetFrameTime();
         
 
-
+        //PlayMusicStream(songs[currentSong]);
 
         
 
@@ -186,6 +186,7 @@ int main(void)
             case INTRO:
 
                 if(IsKeyPressed(KEY_SPACE)){
+                    PlayMusicStream(songs[currentSong]);
                     currentState = MENU;
                 }
                 break;
