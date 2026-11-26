@@ -11,6 +11,9 @@ class Player {
     bool isGrounded;
     float GRAVITY;
     float velocityY=0;
+    float currentHeight = 0.0f;
+    float topHeight = 0.0f;
+    
     public:
     // get
     Rectangle getOutBox() const;
