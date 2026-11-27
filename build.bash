@@ -8,5 +8,6 @@ g++ -std=c++17 -Iinclude \
     src/platform.cpp \
     src/enemy.cpp \
     src/theCamera.cpp \
+    src/fakeplatform.cpp \
     -o build/Game1 \
     -lraylib -lGL -lm -lpthread -ldl -lrt -lX11

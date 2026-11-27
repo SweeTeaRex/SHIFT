@@ -7,6 +7,7 @@
 #include "enemy.h"
 #include "theCamera.h"
 #include "gameData.h"
+#include "fakeplatform.h"
 
 // Platformer game
 
@@ -17,7 +18,8 @@ int main(void)
 {
     
     InitWindow(screenWidth, screenHeight, "Platformer Game");
-    GameState currentState = LVL1;
+    GameState currentState = INTRO;
+    //GameState currentState = LVL1;
 
     float alpha = 1.0f;
 
@@ -88,9 +90,9 @@ int main(void)
     Platform rightWall;
     rightWall.setWall({levelWidth-20, 0, 20, levelHeight});
     
-    //REAL PLATFORMS LANDING
-
     
+    
+    //REAL PLATFORMS LANDING
     int REAL_PLATFORM_COUNT = 12;
     Platform realPlatformArr[REAL_PLATFORM_COUNT];
     int platformColorIndex = 0;
@@ -131,6 +133,58 @@ int main(void)
     // platform 12 H: 650
     //Platform platform12;
     realPlatformArr[11].setWall({200, levelHeight-650, levelWidth-200, 5});
+
+    // FAKE PLATFORMS IN FRONT
+    int NUM_FAKE_PLATFORMS_FRONT = 4;
+    FakePlatform fakePlatformsFront[NUM_FAKE_PLATFORMS_FRONT];
+
+    fakePlatformsFront[0].setShape(RECTANGLE);
+    fakePlatformsFront[0].setPosition({levelWidth/2-200, levelHeight-1000});
+    fakePlatformsFront[0].setSize(5,1000);
+
+    fakePlatformsFront[1].setShape(TRIANGLE);
+    fakePlatformsFront[1].setPosition({levelWidth/2-200, levelHeight});
+    fakePlatformsFront[1].setSize(100, 200);
+    
+    fakePlatformsFront[2].setShape(TRIANGLE);
+    fakePlatformsFront[2].setPosition({levelWidth/2-50, levelHeight});
+    fakePlatformsFront[2].setSize(100, 200);
+
+    fakePlatformsFront[3].setShape(RECTANGLE);
+    fakePlatformsFront[3].setPosition({levelWidth/2+200, levelHeight-1000});
+    fakePlatformsFront[3].setSize(5,1000);
+
+
+    // FAKE PLATFORMS BEHIND PLAYER
+    int NUM_FAKE_PLATFORMS_BACK = 6;
+    FakePlatform fakePlatformsBack[NUM_FAKE_PLATFORMS_BACK];
+
+    fakePlatformsBack[0].setShape(TRIANGLE);
+    fakePlatformsBack[0].setPosition({levelWidth/2-170, levelHeight});
+    fakePlatformsBack[0].setSize(200, 300);
+
+    fakePlatformsBack[1].setShape(CIRCLE);
+    fakePlatformsBack[1].setPosition({100, levelHeight-200});
+    fakePlatformsBack[1].setSize(50, 50);
+
+    fakePlatformsBack[2].setShape(ELLIPSE);
+    fakePlatformsBack[2].setPosition({levelWidth/2+300, levelHeight-200});
+    fakePlatformsBack[2].setSize(50, 20);
+
+    fakePlatformsBack[3].setShape(RECTANGLE);
+    fakePlatformsBack[3].setPosition({levelWidth/2, levelHeight-300});
+    fakePlatformsBack[3].setSize(50, 20);
+
+    fakePlatformsBack[4].setShape(CIRCLE);
+    fakePlatformsBack[4].setPosition({levelWidth-300, levelHeight-100});
+    fakePlatformsBack[4].setSize(50, 20);
+
+    fakePlatformsBack[5].setShape(CIRCLE);
+    fakePlatformsBack[5].setPosition({levelWidth-100, levelHeight-500});
+    fakePlatformsBack[5].setSize(50, 20);
+
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -367,8 +421,10 @@ int main(void)
                     //BeginMode2D(debugCam);
                     
                     // RENDER BEHIND PLAYER
-
-                    //DrawRectangleRec(platform1.getWall(), BLACK);
+                    for (int i = 0; i < NUM_FAKE_PLATFORMS_BACK; i++) {
+                    fakePlatformsBack[i].draw();
+                    }
+                    
 
                     // PLAYER RENDER
                     DrawRectangleRec(player.getOutBox(), MAGENTA);
@@ -377,7 +433,7 @@ int main(void)
                     DrawRectangleRec(platformBase.getWall(), BLACK);
                     DrawRectangleRec(leftWall.getWall(), BLACK);
                     DrawRectangleRec(rightWall.getWall(), BLACK);
-                    
+                    // REAL PLATFORM RENDER IN FRONT
                     if(platformColorIndex==0){
                     for (int i = 0; i < REAL_PLATFORM_COUNT; i++) {
                     DrawRectangleRec(realPlatformArr[i].getWall(), BLACK);
@@ -386,36 +442,26 @@ int main(void)
                     else{
                     for (int i = 0; i < REAL_PLATFORM_COUNT; i++) {
                     DrawRectangleRec(realPlatformArr[i].getWall(), PINK);
-
                     }
                     }
-
-                    /*DrawRectangleRec(platform2.getWall(), BLACK);
-                    DrawRectangleRec(platform3.getWall(), BLACK);
-                    DrawRectangleRec(platform4.getWall(), BLACK);
-                    DrawRectangleRec(platform5.getWall(), BLACK);
-                    DrawRectangleRec(platform6.getWall(), BLACK);
-                    DrawRectangleRec(platform7.getWall(), BLACK);
-                    DrawRectangleRec(platform8.getWall(), BLACK);
-                    DrawRectangleRec(platform9.getWall(), BLACK);
-                    DrawRectangleRec(platform10.getWall(), BLACK);
-                    DrawRectangleRec(platform11.getWall(), BLACK);
-                    DrawRectangleRec(platform12.getWall(), BLACK);
-                    */
-                     
+                    // FALSE SHAPE RENDER IN FRONT
+                    for (int i = 0; i < NUM_FAKE_PLATFORMS_FRONT; i++) {
+                    fakePlatformsFront[i].draw();
+                    }
 
 
-                    DrawText("Press O to enter EASY MODE", camera.target.x-700, camera.target.y+250, 20, DARKPURPLE);
-                    DrawText("Press P to Mute/Unmute | Press TAB to change song | A/D is move | SHIFT is Jump/Boot | C changes camera | Arrow Keys control camera", camera.target.x-700, camera.target.y+350, 20, DARKPURPLE);
+                    // RENDER UI TEXT
+                    DrawText("Press O to enter EASY MODE", camera.target.x-700, camera.target.y+250, 20, GRAY);
+                    DrawText("Press P to Mute/Unmute | Press TAB to change song | A/D is move | SHIFT is Jump/Boot | C changes camera | Arrow Keys control camera", camera.target.x-700, camera.target.y+350, 20, GRAY);
                     
                     DrawText(
                         TextFormat("Current Height: %.2f", player.getCurrentHeight()),
-                        camera.target.x+300, camera.target.y+300, 30, PINK
+                        camera.target.x+300, camera.target.y+300, 30, GRAY
                     );
 
                     DrawText(
                         TextFormat("Top Height: %.2f", player.getTopHeight()),
-                        camera.target.x+300, camera.target.y+200, 30, PINK
+                        camera.target.x+300, camera.target.y+200, 30, GRAY
                     );
 
                     EndMode2D();                    

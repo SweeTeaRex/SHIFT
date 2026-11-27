@@ -10,6 +10,7 @@ em++ \
     src/platform.cpp \
     src/enemy.cpp \
     src/theCamera.cpp \
+    src/fakeplatform.cpp \
     -o build-web/Game1.html \
     -I include \
     -I ~/raylib/src \

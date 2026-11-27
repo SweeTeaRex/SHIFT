@@ -6,15 +6,7 @@ Rectangle Platform::getWall(){
     
     return wall;
 }
-/*
-Rectangle Platform::getLeftWall(){
-    return leftWall;
-}
 
-Rectangle Platform::getRightWall(){
-    return rightWall;
-}
-*/
 Vector2 Platform::getPosition(){
     return position;
 
@@ -25,16 +17,8 @@ Vector2 Platform::getPosition(){
 
 void Platform::setWall(Rectangle inputWall){
     wall = inputWall;
-}
-/*
-void Platform::setLeftWall(Rectangle inputWall){
-    leftWall = inputWall;
-}
 
-void Platform::setRightWall(Rectangle inputWall){
-    rightWall = inputWall;
 }
-*/
 
 
 
