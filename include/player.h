@@ -8,14 +8,16 @@ class Player {
     Rectangle inBox;
     Vector2 position;
     float velocity;
-    bool isGrounded;
+    bool isGrounded = false;
     float GRAVITY;
     float velocityY=0;
-    float currentHeight = 0.0f;
-    float topHeight = 0.0f;
+    float currentHeight;
+    float topHeight;
     
     public:
     // get
+    float getCurrentHeight();
+    float getTopHeight();
     Rectangle getOutBox() const;
     Rectangle getInBox() const;
     Vector2 getPosition()const;
@@ -27,6 +29,8 @@ class Player {
     void setPosition(Vector2 inputPos);
     void setVelocityY(float inputVelocity);
     void setGrounded(bool inputGrounded);
+    void setCurrentHeight(float height);
+    void setTopHeight(float height);
     // update
     void updatePlayer(float deltaTime);
 };

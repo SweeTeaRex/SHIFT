@@ -18,6 +18,21 @@ float Player::getVelocity() const{
 float Player::getVelocityY() {
     return velocityY;
 }
+
+
+float Player::getCurrentHeight(){
+    return currentHeight;
+}
+
+float Player::getTopHeight(){
+    return topHeight;
+}
+
+
+
+
+
+
 // SET FUNCTIONS
 void Player::setOutBox(Rectangle inputBox){
     outBox = inputBox;
@@ -33,68 +48,67 @@ void Player::setPosition(Vector2 inputPos){
     inBox.y = position.y;
 }
 void Player::setVelocityY(float inputVelocity){
-    velocity = inputVelocity;
+    velocityY = inputVelocity;
 }
 
 void Player::setGrounded(bool inputGrounded){
     isGrounded = inputGrounded;
 }
 
+void Player::setCurrentHeight(float height){
+    currentHeight = height;
+}
+
+void Player::setTopHeight(float height){
+    topHeight = height;
+}
 
 // UPDATE FUNCTIONS
 void Player::updatePlayer(float deltaTime){
-    
+
     GRAVITY = 100.0f;
-    
+
+    // JUMP FIRST
+    if(IsKeyPressed(KEY_LEFT_SHIFT) && isGrounded){
+        velocityY = -JUMP_SPEED;
+        isGrounded = false;
+    }
+
+    // THEN APPLY GRAVITY
     velocityY += GRAVITY * deltaTime;
+
+    // THEN MOVE PLAYER
     position.y += velocityY * deltaTime;
 
-    //jump
-    if(IsKeyPressed(KEY_LEFT_SHIFT)&& isGrounded){
-        velocityY = -JUMP_SPEED;
-        isGrounded=false;
-    }
-    //left
-    if(IsKeyDown(KEY_LEFT_SHIFT)&&IsKeyDown(KEY_A)){
-        position.x -= PLAYER_SPEED2*deltaTime;
+
+    // left
+    if(IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_A)){
+        position.x -= PLAYER_SPEED2 * deltaTime;
     }
     else if(IsKeyDown(KEY_A)){
-        position.x -= PLAYER_SPEED1*deltaTime;
+        position.x -= PLAYER_SPEED1 * deltaTime;
     }
-    //right
-   
-    if(IsKeyDown(KEY_LEFT_SHIFT)&&IsKeyDown(KEY_D)){
-        position.x += PLAYER_SPEED2*deltaTime;
+
+
+    // right
+    if(IsKeyDown(KEY_LEFT_SHIFT) && IsKeyDown(KEY_D)){
+        position.x += PLAYER_SPEED2 * deltaTime;
     }
     else if(IsKeyDown(KEY_D)){
-        position.x += PLAYER_SPEED1*deltaTime;
+        position.x += PLAYER_SPEED1 * deltaTime;
     }
+
+
     // down
-    
     if(IsKeyDown(KEY_S) && IsKeyDown(KEY_LEFT_SHIFT)){
-        position.y += PLAYER_SPEED2*deltaTime;
+        position.y += PLAYER_SPEED2 * deltaTime;
     }
-    /*
-    else if(IsKeyDown(KEY_S)){
-        position.y += PLAYER_SPEED1*deltaTime;
-    }
-    // up
-    
-    if(IsKeyDown(KEY_W) && IsKeyDown(KEY_LEFT_SHIFT)){
-        position.y -= PLAYER_SPEED2*deltaTime;
-    }
-    else if(IsKeyDown(KEY_W)){
-        position.y -= PLAYER_SPEED1*deltaTime;
-    }
-    */
-    
-    
-    
+
+
+    // Update collision boxes
     outBox.x = position.x;
-    inBox.x= position.x;
     outBox.y = position.y;
+
+    inBox.x = position.x;
     inBox.y = position.y;
-
-
-    
 }

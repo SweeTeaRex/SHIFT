@@ -88,43 +88,49 @@ int main(void)
     Platform rightWall;
     rightWall.setWall({levelWidth-20, 0, 20, levelHeight});
     
-    //PLATFORMS LANDING
+    //REAL PLATFORMS LANDING
+
+    
+    int REAL_PLATFORM_COUNT = 12;
+    Platform realPlatformArr[REAL_PLATFORM_COUNT];
+    int platformColorIndex = 0;
+
     // platform 1  H: 100
-    Platform platform1;
-    platform1.setWall({levelWidth - 100, levelHeight-100, 100, 100});
+    //Platform platform1;
+    realPlatformArr[0].setWall({levelWidth - 100, levelHeight-100, 100, 100});
     // platform 2 H: 150
-    Platform platform2;
-    platform2.setWall({levelWidth - 50, levelHeight - 150, 50,20});
+    //Platform platform2;
+    realPlatformArr[1].setWall({levelWidth - 50, levelHeight - 150, 50,20});
     //platform 3  H:200
-    Platform platform3;
-    platform3.setWall({100, levelHeight-200, 100,20});
+    //Platform platform3;
+    realPlatformArr[2].setWall({100, levelHeight-200, 100,20});
     //platform 4   H: 250
-    Platform platform4;
-    platform4.setWall({100, levelHeight-250, 100,5});
+    //Platform platform4;
+    realPlatformArr[3].setWall({100, levelHeight-250, 100,5});
     // platform 5   H: 300
-    Platform platform5;
-    platform5.setWall({levelWidth-100, levelHeight-300, 100, 10});
+    //Platform platform5;
+    realPlatformArr[4].setWall({levelWidth-100, levelHeight-300, 100, 10});
     //platform 6  H: 350
-    Platform platform6;
-    platform6.setWall({levelWidth-100, levelHeight-350, 100, 1});
+    //Platform platform6;
+    realPlatformArr[5].setWall({levelWidth-100, levelHeight-350, 100, 1});
     // platform 7 H: 400
-    Platform platform7;
-    platform7.setWall({20, levelHeight-400, 20, 1});
+    //Platform platform7;
+    realPlatformArr[6].setWall({20, levelHeight-400, 20, 1});
     // platform 8 H: 450
-    Platform platform8;
-    platform8.setWall({levelWidth/2, levelHeight-450, 40, 10});
+    //Platform platform8;
+    realPlatformArr[7].setWall({levelWidth/2, levelHeight-450, 40, 10});
     // platform 9 H: 500
-    Platform platform9;
-    platform9.setWall({levelWidth/2-100, levelHeight-500, 40, 5});
+    //Platform platform9;
+    realPlatformArr[8].setWall({levelWidth/2-100, levelHeight-500, 40, 5});
     // platform 10 H: 550
-    Platform platform10;
-    platform10.setWall({levelWidth/2, levelHeight-550, 10, 1});
+    //Platform platform10;
+    realPlatformArr[9].setWall({levelWidth/2, levelHeight-550, 10, 1});
      // platform 11 H: 600
-    Platform platform11;
-    platform11.setWall({levelWidth/2+100, levelHeight-600, 5, 1});
+    //Platform platform11;
+    realPlatformArr[10].setWall({levelWidth/2+100, levelHeight-600, 5, 1});
     // platform 12 H: 650
-    Platform platform12;
-    platform12.setWall({200, levelHeight-650, levelWidth-200, 5});
+    //Platform platform12;
+    realPlatformArr[11].setWall({200, levelHeight-650, levelWidth-200, 5});
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -219,6 +225,13 @@ int main(void)
                 break;
 //////////////////////////////////////////////////////////////////////////////////////////////////////
             case LVL1:
+
+                if(IsKeyPressed(KEY_O)){
+                    platformColorIndex++;
+                    if(platformColorIndex>=2){
+                        platformColorIndex=0;
+                    }
+                }
                 
                 if(IsKeyPressed(KEY_C)){
                     camIndex++;
@@ -254,6 +267,7 @@ int main(void)
                 //update player
                 player.updatePlayer(deltaTime);
                 
+                
 
                 
                 
@@ -271,10 +285,7 @@ int main(void)
                     player.setVelocityY(0.0f);
                     player.setGrounded(true);
                 }
-                else
-                {
-                    player.setGrounded(false);
-                }
+                
 
                 player.setPosition(newPosition);
 
@@ -289,123 +300,31 @@ int main(void)
                 player.setPosition(newPosition);
 
 
-                //----------------------------------------------------------------------------------
-                //Platform 1
+                // REAL PLATFORM COLLISION
+                for (int i = 0; i < REAL_PLATFORM_COUNT; i++) {
+
                 Rectangle playerBeforePlatform = player.getOutBox();
-                newPosition = platform1.checkWallCollPlatform(player.getOutBox(), platform1.getWall(), player.getVelocityY());
-                if(newPosition.y != playerBeforePlatform.y){
+
+                newPosition = realPlatformArr[i].checkWallCollPlatform(
+                    player.getOutBox(),
+                    realPlatformArr[i].getWall(),
+                    player.getVelocityY()
+                );
+
+                if (newPosition.y != playerBeforePlatform.y) {
                     player.setVelocityY(0.0f);
                     player.setGrounded(true);
                 }
+
                 player.setPosition(newPosition);
-
-
-                // platform 2
-                playerBeforePlatform = player.getOutBox();
-                newPosition = platform2.checkWallCollPlatform(player.getOutBox(), platform2.getWall(), player.getVelocityY());
-                if(newPosition.y != playerBeforePlatform.y){
-                    player.setVelocityY(0.0f);
-                    player.setGrounded(true);
                 }
-                player.setPosition(newPosition);
+            
+                // in game height statistic 
+                player.setCurrentHeight(levelHeight - player.getPosition().y);
                 
-                // platform 3
-                playerBeforePlatform = player.getOutBox();
-                newPosition = platform3.checkWallCollPlatform(player.getOutBox(), platform3.getWall(), player.getVelocityY());
-                if(newPosition.y != playerBeforePlatform.y){
-                    player.setVelocityY(0.0f);
-                    player.setGrounded(true);
+                if(player.getCurrentHeight() > player.getTopHeight()){
+                    player.setTopHeight(player.getCurrentHeight());
                 }
-                player.setPosition(newPosition);
-                
-                //platform 4
-                playerBeforePlatform = player.getOutBox();
-                newPosition = platform4.checkWallCollPlatform(player.getOutBox(), platform4.getWall(), player.getVelocityY());
-                if(newPosition.y != playerBeforePlatform.y){
-                    player.setVelocityY(0.0f);
-                    player.setGrounded(true);
-                }
-                player.setPosition(newPosition);
-
-                // platform 5
-
-                playerBeforePlatform = player.getOutBox();
-                newPosition = platform5.checkWallCollPlatform(player.getOutBox(), platform5.getWall(), player.getVelocityY());
-                if(newPosition.y != playerBeforePlatform.y){
-                    player.setVelocityY(0.0f);
-                    player.setGrounded(true);
-                }
-                player.setPosition(newPosition);
-
-                // platform 6
-
-                playerBeforePlatform = player.getOutBox();
-                newPosition = platform6.checkWallCollPlatform(player.getOutBox(), platform6.getWall(), player.getVelocityY());
-                if(newPosition.y != playerBeforePlatform.y){
-                    player.setVelocityY(0.0f);
-                    player.setGrounded(true);
-                }
-                player.setPosition(newPosition);
-
-                // platform 7
-
-                playerBeforePlatform = player.getOutBox();
-                newPosition = platform7.checkWallCollPlatform(player.getOutBox(), platform7.getWall(), player.getVelocityY());
-                if(newPosition.y != playerBeforePlatform.y){
-                    player.setVelocityY(0.0f);
-                    player.setGrounded(true);
-                }
-                player.setPosition(newPosition);
-
-                // platform 8
-
-                playerBeforePlatform = player.getOutBox();
-                newPosition = platform8.checkWallCollPlatform(player.getOutBox(), platform8.getWall(), player.getVelocityY());
-                if(newPosition.y != playerBeforePlatform.y){
-                    player.setVelocityY(0.0f);
-                    player.setGrounded(true);
-                }
-                player.setPosition(newPosition);
-
-                // platform 9
-
-                playerBeforePlatform = player.getOutBox();
-                newPosition = platform9.checkWallCollPlatform(player.getOutBox(), platform9.getWall(), player.getVelocityY());
-                if(newPosition.y != playerBeforePlatform.y){
-                    player.setVelocityY(0.0f);
-                    player.setGrounded(true);
-                }
-                player.setPosition(newPosition);
-
-                // platform 10
-
-                playerBeforePlatform = player.getOutBox();
-                newPosition = platform10.checkWallCollPlatform(player.getOutBox(), platform10.getWall(), player.getVelocityY());
-                if(newPosition.y != playerBeforePlatform.y){
-                    player.setVelocityY(0.0f);
-                    player.setGrounded(true);
-                }
-                player.setPosition(newPosition);
-
-                // platform 11
-
-                playerBeforePlatform = player.getOutBox();
-                newPosition = platform11.checkWallCollPlatform(player.getOutBox(), platform11.getWall(), player.getVelocityY());
-                if(newPosition.y != playerBeforePlatform.y){
-                    player.setVelocityY(0.0f);
-                    player.setGrounded(true);
-                }
-                player.setPosition(newPosition);
-
-                // platform 12
-
-                playerBeforePlatform = player.getOutBox();
-                newPosition = platform12.checkWallCollPlatform(player.getOutBox(), platform12.getWall(), player.getVelocityY());
-                if(newPosition.y != playerBeforePlatform.y){
-                    player.setVelocityY(0.0f);
-                    player.setGrounded(true);
-                }
-                player.setPosition(newPosition);
 
                 break;
 
@@ -449,7 +368,7 @@ int main(void)
                     
                     // RENDER BEHIND PLAYER
 
-                    DrawRectangleRec(platform1.getWall(), BLACK);
+                    //DrawRectangleRec(platform1.getWall(), BLACK);
 
                     // PLAYER RENDER
                     DrawRectangleRec(player.getOutBox(), MAGENTA);
@@ -459,7 +378,19 @@ int main(void)
                     DrawRectangleRec(leftWall.getWall(), BLACK);
                     DrawRectangleRec(rightWall.getWall(), BLACK);
                     
-                    DrawRectangleRec(platform2.getWall(), BLACK);
+                    if(platformColorIndex==0){
+                    for (int i = 0; i < REAL_PLATFORM_COUNT; i++) {
+                    DrawRectangleRec(realPlatformArr[i].getWall(), BLACK);
+                    }
+                    }
+                    else{
+                    for (int i = 0; i < REAL_PLATFORM_COUNT; i++) {
+                    DrawRectangleRec(realPlatformArr[i].getWall(), PINK);
+
+                    }
+                    }
+
+                    /*DrawRectangleRec(platform2.getWall(), BLACK);
                     DrawRectangleRec(platform3.getWall(), BLACK);
                     DrawRectangleRec(platform4.getWall(), BLACK);
                     DrawRectangleRec(platform5.getWall(), BLACK);
@@ -470,12 +401,23 @@ int main(void)
                     DrawRectangleRec(platform10.getWall(), BLACK);
                     DrawRectangleRec(platform11.getWall(), BLACK);
                     DrawRectangleRec(platform12.getWall(), BLACK);
-                    
+                    */
                      
 
 
+                    DrawText("Press O to enter EASY MODE", camera.target.x-700, camera.target.y+250, 20, DARKPURPLE);
                     DrawText("Press P to Mute/Unmute | Press TAB to change song | A/D is move | SHIFT is Jump/Boot | C changes camera | Arrow Keys control camera", camera.target.x-700, camera.target.y+350, 20, DARKPURPLE);
                     
+                    DrawText(
+                        TextFormat("Current Height: %.2f", player.getCurrentHeight()),
+                        camera.target.x+300, camera.target.y+300, 30, PINK
+                    );
+
+                    DrawText(
+                        TextFormat("Top Height: %.2f", player.getTopHeight()),
+                        camera.target.x+300, camera.target.y+200, 30, PINK
+                    );
+
                     EndMode2D();                    
                     break;
 
