@@ -99,10 +99,7 @@ void Player::updatePlayer(float deltaTime){
     }
 
 
-    // down
-    if(IsKeyDown(KEY_S) && IsKeyDown(KEY_LEFT_SHIFT)){
-        position.y += PLAYER_SPEED2 * deltaTime;
-    }
+    
 
 
     // Update collision boxes
