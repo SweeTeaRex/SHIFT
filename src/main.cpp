@@ -17,7 +17,7 @@ int main(void)
 {
     
     InitWindow(screenWidth, screenHeight, "Platformer Game");
-    GameState currentState = INTRO;
+    GameState currentState = LVL1;
 
     float alpha = 1.0f;
 
@@ -88,7 +88,7 @@ int main(void)
     Platform rightWall;
     rightWall.setWall({levelWidth-20, 0, 20, levelHeight});
     
-    //PLATFORMS
+    //PLATFORMS LANDING
     // platform 1  H: 100
     Platform platform1;
     platform1.setWall({levelWidth - 100, levelHeight-100, 100, 100});
@@ -107,6 +107,25 @@ int main(void)
     //platform 6  H: 350
     Platform platform6;
     platform6.setWall({levelWidth-100, levelHeight-350, 100, 1});
+    // platform 7 H: 400
+    Platform platform7;
+    platform7.setWall({20, levelHeight-400, 20, 1});
+    // platform 8 H: 450
+    Platform platform8;
+    platform8.setWall({levelWidth/2, levelHeight-450, 40, 10});
+    // platform 9 H: 500
+    Platform platform9;
+    platform9.setWall({levelWidth/2-100, levelHeight-500, 40, 5});
+    // platform 10 H: 550
+    Platform platform10;
+    platform10.setWall({levelWidth/2, levelHeight-550, 10, 1});
+     // platform 11 H: 600
+    Platform platform11;
+    platform11.setWall({levelWidth/2+100, levelHeight-600, 5, 1});
+    // platform 12 H: 650
+    Platform platform12;
+    platform12.setWall({200, levelHeight-650, levelWidth-200, 5});
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
     // camera
@@ -123,7 +142,8 @@ int main(void)
     debugCam.rotation = 0.0f;
     debugCam.zoom = 1.0f; 
 
-
+    
+    int camIndex = 0;
   
 
     
@@ -199,6 +219,13 @@ int main(void)
                 break;
 //////////////////////////////////////////////////////////////////////////////////////////////////////
             case LVL1:
+                
+                if(IsKeyPressed(KEY_C)){
+                    camIndex++;
+                    if(camIndex>=2){
+                        camIndex=0;
+                    }
+                }
                 
                 // debug camera controlls
                 if (IsKeyDown(KEY_RIGHT)) {
@@ -320,6 +347,66 @@ int main(void)
                 }
                 player.setPosition(newPosition);
 
+                // platform 7
+
+                playerBeforePlatform = player.getOutBox();
+                newPosition = platform7.checkWallCollPlatform(player.getOutBox(), platform7.getWall(), player.getVelocityY());
+                if(newPosition.y != playerBeforePlatform.y){
+                    player.setVelocityY(0.0f);
+                    player.setGrounded(true);
+                }
+                player.setPosition(newPosition);
+
+                // platform 8
+
+                playerBeforePlatform = player.getOutBox();
+                newPosition = platform8.checkWallCollPlatform(player.getOutBox(), platform8.getWall(), player.getVelocityY());
+                if(newPosition.y != playerBeforePlatform.y){
+                    player.setVelocityY(0.0f);
+                    player.setGrounded(true);
+                }
+                player.setPosition(newPosition);
+
+                // platform 9
+
+                playerBeforePlatform = player.getOutBox();
+                newPosition = platform9.checkWallCollPlatform(player.getOutBox(), platform9.getWall(), player.getVelocityY());
+                if(newPosition.y != playerBeforePlatform.y){
+                    player.setVelocityY(0.0f);
+                    player.setGrounded(true);
+                }
+                player.setPosition(newPosition);
+
+                // platform 10
+
+                playerBeforePlatform = player.getOutBox();
+                newPosition = platform10.checkWallCollPlatform(player.getOutBox(), platform10.getWall(), player.getVelocityY());
+                if(newPosition.y != playerBeforePlatform.y){
+                    player.setVelocityY(0.0f);
+                    player.setGrounded(true);
+                }
+                player.setPosition(newPosition);
+
+                // platform 11
+
+                playerBeforePlatform = player.getOutBox();
+                newPosition = platform11.checkWallCollPlatform(player.getOutBox(), platform11.getWall(), player.getVelocityY());
+                if(newPosition.y != playerBeforePlatform.y){
+                    player.setVelocityY(0.0f);
+                    player.setGrounded(true);
+                }
+                player.setPosition(newPosition);
+
+                // platform 12
+
+                playerBeforePlatform = player.getOutBox();
+                newPosition = platform12.checkWallCollPlatform(player.getOutBox(), platform12.getWall(), player.getVelocityY());
+                if(newPosition.y != playerBeforePlatform.y){
+                    player.setVelocityY(0.0f);
+                    player.setGrounded(true);
+                }
+                player.setPosition(newPosition);
+
                 break;
 
     }        
@@ -352,14 +439,22 @@ int main(void)
                 
                 case LVL1:
                     ClearBackground(colorArray[colorIndex]);
-                    BeginMode2D(camera);
+                    if(camIndex==0){
+                        BeginMode2D(camera);
+                    }
+                    else {
+                        BeginMode2D(debugCam);
+                    }
                     //BeginMode2D(debugCam);
                     
-                    // draw platforms and player
+                    // RENDER BEHIND PLAYER
 
                     DrawRectangleRec(platform1.getWall(), BLACK);
+
+                    // PLAYER RENDER
                     DrawRectangleRec(player.getOutBox(), MAGENTA);
                     DrawRectangleRec(player.getInBox(), PINK);
+                    // RENDER IN FRONT OF PLAYER
                     DrawRectangleRec(platformBase.getWall(), BLACK);
                     DrawRectangleRec(leftWall.getWall(), BLACK);
                     DrawRectangleRec(rightWall.getWall(), BLACK);
@@ -369,14 +464,19 @@ int main(void)
                     DrawRectangleRec(platform4.getWall(), BLACK);
                     DrawRectangleRec(platform5.getWall(), BLACK);
                     DrawRectangleRec(platform6.getWall(), BLACK);
-                    
+                    DrawRectangleRec(platform7.getWall(), BLACK);
+                    DrawRectangleRec(platform8.getWall(), BLACK);
+                    DrawRectangleRec(platform9.getWall(), BLACK);
+                    DrawRectangleRec(platform10.getWall(), BLACK);
+                    DrawRectangleRec(platform11.getWall(), BLACK);
+                    DrawRectangleRec(platform12.getWall(), BLACK);
                     
                      
 
 
-                    DrawText("Press P to Mute/Unmute | Press TAB to change song | A/D is move | SHIFT is Jump/Boot", camera.target.x-500, camera.target.y+350, 20, DARKPURPLE);
+                    DrawText("Press P to Mute/Unmute | Press TAB to change song | A/D is move | SHIFT is Jump/Boot | C changes camera | Arrow Keys control camera", camera.target.x-700, camera.target.y+350, 20, DARKPURPLE);
                     
-                                        
+                    EndMode2D();                    
                     break;
 
 
@@ -386,7 +486,7 @@ int main(void)
             }
               
             DrawFPS(camera.target.x-700, camera.target.y+350);
-            EndMode2D();
+            
         EndDrawing();
         
     }
